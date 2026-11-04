@@ -257,7 +257,7 @@ static const sharpen_game_t F_SHARPEN = {.blit = 0x28260C, .blit_ret = 0x283CD2,
         .fbo11_size = 0x30, .below = 640};   // stock 640 isn't sharpened
 
 static const game_t GAMES[] = {
-    // X: FM pointer 0x814F756C, stage table pointer 0x814F0208 (seg1 0x814EE000)
+    // Project DIVA X: FM pointer 0x814F756C, stage table pointer 0x814F0208 (seg1 0x814EE000)
     {0x0A3FF027, GAME_X, 0x271368, 0x956C,  1, 0x2D, 0x2208,   1, 1, 3, 2, 0, 0x0C, 0, {0}, NULL},
     // Project DIVA f EU: FM 0x816E7228, stage table 0x818F8B58 (seg1 0x81689000)
     {0x544807B3, GAME_F, 0x28C54E, 0x5E228, 0, 0xEC, 0x26FB58, 0, 0, 8, 7, 5, 0x18, 0, {0}, &F_CUTS, &F_SHARPEN, &F_DRS},

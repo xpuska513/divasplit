@@ -49,6 +49,7 @@ Files you put in `ux0:data/divasplit/install/` (for example a test build of `div
 
 1. Copy `divasplit.suprx` to `ur0:tai/`.
 2. In `ur0:tai/config.txt`, add a section for each game you have:
+   - EU releases
    ```
    *PCSB01007
    ur0:tai/divasplit.suprx
@@ -57,7 +58,15 @@ Files you put in `ux0:data/divasplit/install/` (for example a test build of `div
    *PCSB00554
    ur0:tai/divasplit.suprx
    ```
-   For the US release of X, use `*PCSE00867`.
+   - US releases
+   ```
+   *PCSE00326
+   ur0:tai/divasplit.suprx
+   *PCSE00434
+   ur0:tai/divasplit.suprx
+   *PCSE00867
+   ur0:tai/divasplit.suprx
+   ```
 3. Reboot.
 
 ### Quick Menu toggles (optional)
