@@ -53,3 +53,57 @@
 0:0x2896F6 bytes(4FF00008)
 0:0x2896FE bytes(4FF00009)
 
+# Hatsune Miku: Project Diva f 2nd [US 1.00]
+[PCSE00434, eboot.bin, 0x31DAC716]
+@IB
+0:0x25E34A t2_mov(0, 3, ib_w)
+0:0x25E352 t2_mov(0, 4, ib_h)
+0:0x25D500 t2_mov(1, 5, ib_w)
+0:0x25D508 t2_mov(1, 6, ib_h)
+@FPS
+# --- 60fps for Project DIVA f 2nd [US 1.00], frame-rate aware (FPS=30 keeps stock timing) ---
+# vsync wait: sceDisplayWaitVblankStartMulti(vblank)
+0:0xA994 t1_mov(0, vblank)
+# expected fps = refresh / vblank (was refresh * 0.5) + its two 30.0 seeds
+0:0xAAF2 t2_vmov(1, 1.0 / vblank)
+0:0xC516 t1_movt(0, 60.0 / vblank >> 16)
+0:0xC75E t1_movt(1, 60.0 / vblank >> 16)
+# frame manager target / measured fps init (30.0)
+0:0xC216 t1_movt(2, 60.0 / vblank >> 16)
+# hard-coded 30fps -> 60Hz conversions (x2.0) -> x vblank: timer, oscillator
+0:0x58E370 t2_vmov(1, float(vblank))
+0:0x25FEE0 t2_vmov(1, float(vblank))
+# chara default motion step when none is set: 2.0 -> vblank (vmov.f32 d2)
+0:0x368960 uint32(0x2F10EF80 | ((float(vblank) >> 23) & 7) | (((float(vblank) >> 19) & 15) << 16))
+# hard-coded 1/30 s per-frame timesteps -> vblank / 60
+# anim player fallback, chara wind ramp, countdown timer, fade timer, smoothing
+0:0x20E6C2 mov32(0, vblank / 60.0, 0)
+0:0x361EE4 mov32(3, vblank / 60.0, 0)
+0:0x23F4A mov32(0, vblank / 60.0, 0)
+0:0x588BC mov32(1, vblank / 60.0, 4)
+0:0x591B8 mov32(0, vblank / 60.0, 0)
+# counters advanced by GetDelta() in 30Hz frames -> vblank / 2 per frame
+# chara wind clock, effect clocks/steps, frame countdowns
+0:0x361F4C t2_vmov(0, vblank / 2.0)
+0:0x26C296 t2_vmov(0, vblank / 2.0)
+0:0x26C3A4 t2_vmov(0, vblank / 2.0)
+0:0x26C57C t2_vmov(0, vblank / 2.0)
+0:0x26CF6E t2_vmov(0, vblank / 2.0)
+0:0x40DEC2 t2_vmov(0, vblank / 2.0)
+0:0x40DF22 t2_vmov(0, vblank / 2.0)
+# UI transition frame counters
+0:0x6B17A t2_vmov(0, vblank / 2.0)
+0:0x6B2A8 t2_vmov(0, vblank / 2.0)
+0:0x6B328 t2_vmov(0, vblank / 2.0)
+0:0x6B524 t2_vmov(0, vblank / 2.0)
+0:0x6B65C t2_vmov(0, vblank / 2.0)
+0:0x6B6DC t2_vmov(0, vblank / 2.0)
+0:0x6B8DC t2_vmov(0, vblank / 2.0)
+0:0x6BA1C t2_vmov(0, vblank / 2.0)
+0:0x6BAAA t2_vmov(0, vblank / 2.0)
+0:0x6BCF4 t2_vmov(0, vblank / 2.0)
+0:0x6DC10 t2_vmov(0, vblank / 2.0)
+# input: at 60 fps a frame sometimes gets no new controller sample; the game then
+# read every button as released (broken holds, double presses). Always use the newest sample.
+0:0x2896F6 bytes(4FF00008)
+0:0x2896FE bytes(4FF00009)
