@@ -1107,8 +1107,10 @@ int module_start(SceSize argc, const void *args) {
             diag("optimizations: %s", line);
         }
     }
-    // dev tools, with the profiler kernel plugin installed (an unresolved import returns -1)
-    if (divasplit_prof_stop() >= 0)
+    // dev tools, with the profiler kernel plugin installed. Without divasplit_prof.skprx the
+    // weak import is not resolved and calling it closes the game (C2-12828-1), so only probe
+    // it when prof.on asks for the profiler.
+    if (file_exists(PROF_ON_FILE) && divasplit_prof_stop() >= 0)
         diag("profiler present, tracer hooks: %d", trace_install());
     if (g_game->probe_ret[0])
         diag("uniform reuse hooks: %08X", probe_install(g_text_base,
